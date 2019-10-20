@@ -11,7 +11,6 @@ const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete }) =
         <div className="shopping-cart-table">
             <h2> Your order: </h2>
             <table className="table">
-
                 <thead>
                 <tr>
                     <th>#</th>
@@ -25,7 +24,7 @@ const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete }) =
                 <tbody>
                 {
                     items.map( (item, idx) => {
-                        const { id, title: title, count, total } = item;
+                        const { id, title, count, total } = item;
                         return(
                             <tr key={id}>
                                 <td>{ idx +1 }</td>
@@ -60,26 +59,17 @@ const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete }) =
 
 };
 
-const mapStateToProps = ({ cartItems, orderTotal }) => {
+const mapStateToProps = ({ shoppingCart: { cartItems, orderTotal }}) => {
     return {
         items: cartItems,
         total: orderTotal,
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onIncrease: (id) => {
-            dispatch(bookAddedToCart(id));
-        },
-        onDecrease: (id) => {
-            dispatch(bookDecreasedInCart(id));
-        },
-        onDelete: (id) => {
-            dispatch(bookRemovedFromCart(id));
-        },
-
-    }
+const mapDispatchToProps =  {
+        onIncrease: bookAddedToCart,
+        onDecrease: bookDecreasedInCart,
+        onDelete: bookRemovedFromCart,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCartTable);
