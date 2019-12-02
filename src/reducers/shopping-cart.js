@@ -54,6 +54,14 @@ const updateCartItem = (book, item = {}, changer) => {
     }
 };
 
+function updateOrderTotal(cart) {
+    // console.log(`cart = ${cart[0].total + cart[1].total}`);
+    let total = 0;
+    return cart.reduce(function (sum, current) {
+        return sum + current.total;
+    }, total)
+}
+
 function updateOrder(state, bookId, quantity) {
     const { bookList: { books }, shoppingCart: { cartItems } } = state;
     const book = books.find((book) => book.id === bookId);
@@ -61,7 +69,7 @@ function updateOrder(state, bookId, quantity) {
     const item = cartItems[itemIndex];
     const newItem = updateCartItem(book, item, quantity);
     return {
-        orderTotal: 0,
-        cartItems: updateCartItems(cartItems, newItem, itemIndex)
+        cartItems: updateCartItems(cartItems, newItem, itemIndex),
+        orderTotal: updateOrderTotal(updateCartItems(cartItems, newItem, itemIndex)),
     };
 }

@@ -1,8 +1,11 @@
 import React from 'react';
 import './shop-header.css';
 import { Link } from "react-router-dom";
+import ShoppingCartTable from "../shopping-cart-table/index"
+import {connect} from "react-redux";
 
-const ShopHeader = ({numItems, total}) => {
+
+const ShopHeader = ({items, total}) => {
     return(
         <header className="shop-header row">
             <Link to="/">
@@ -11,11 +14,18 @@ const ShopHeader = ({numItems, total}) => {
             <Link to="/cart">
                 <div className="shopping-cart">
                     <i className="cart-icon fa fa-shopping-cart" />
-                    {numItems} items (${total })
+                    {items.length} items (${total })
                 </div>
             </Link>
         </header>
     )
 };
 
-export default ShopHeader;
+const mapStateToProps = ({ shoppingCart: { cartItems, orderTotal }}) => {
+    return {
+        items: cartItems,
+        total: orderTotal,
+    };
+};
+
+export default connect(mapStateToProps)(ShopHeader);
