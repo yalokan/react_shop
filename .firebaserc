@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "small-shop-react-redux",
+    "shop": "small-shop-react-redux"
+  }
+}
